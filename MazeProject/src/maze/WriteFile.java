@@ -19,16 +19,14 @@ public class WriteFile {
     private File file;
     private FileWriter fileWriter;
     private PrintWriter printWriter;
-    private Maze maze;
 
-    public WriteFile(String fileName, Maze maze) throws IOException {
+    public WriteFile(String fileName) throws IOException {
         this.file = new File(fileName);
         this.fileWriter = new FileWriter(this.file, false);
         this.printWriter = new PrintWriter(this.fileWriter);
-        this.maze = maze;
     }
 
-    public void writeMatrix() {
+    public void writeMatrix(Maze maze) {
         printWriter.println("maze");
 
         for (int i = 0; i < (2 * maze.getHeight() + 1); i++) {
