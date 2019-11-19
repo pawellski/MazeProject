@@ -17,36 +17,36 @@ import java.io.PrintWriter;
 public class WriteFile {
 
     private File file;
-    private FileWriter fw;
-    private PrintWriter pw;
+    private FileWriter fileWriter;
+    private PrintWriter printWriter;
     private Maze maze;
 
     public WriteFile(String fileName, Maze maze) throws IOException {
         this.file = new File(fileName);
-        this.fw = new FileWriter(file, false);
-        this.pw = new PrintWriter(fw);
+        this.fileWriter = new FileWriter(this.file, false);
+        this.printWriter = new PrintWriter(this.fileWriter);
         this.maze = maze;
     }
 
     public void writeMatrix() {
-        pw.println("maze");
+        printWriter.println("maze");
 
         for (int i = 0; i < (2 * maze.getHeight() + 1); i++) {
             for (int j = 0; j < (2 * maze.getWidth() + 1); j++) {
                 if (maze.getCell(i, j) == Cell.ENTRANCE) {
-                    pw.print("# ");
+                    printWriter.print("# ");
                 } else if (maze.getCell(i, j) == Cell.EXIT) {
-                    pw.print("* ");
+                    printWriter.print("* ");
                 } else if (maze.getCell(i, j) == Cell.WALLL) {
-                    pw.print("1 ");
+                    printWriter.print("1 ");
                 } else {
-                    pw.print("0 ");
+                    printWriter.print("0 ");
                 }
             }
-            pw.println();
+            printWriter.println();
         }
-        pw.println("/maze");
-        pw.flush();
-        pw.close();
+        printWriter.println("/maze");
+        printWriter.flush();
+        printWriter.close();
     }
 }
