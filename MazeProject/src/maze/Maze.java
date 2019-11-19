@@ -5,6 +5,7 @@
  */
 package maze;
 
+import java.io.IOException;
 import java.util.Random;
 
 /**
@@ -160,6 +161,24 @@ public class Maze {
             }
             System.out.println();
         }
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public Cell getCell(int i, int j) {
+        return maze[i][j];
+
+    }
+
+    public void writeMaze(String fileName) throws IOException {
+        WriteFile wf = new WriteFile(fileName, this);
+        wf.writeMatrix();
     }
 
 }
