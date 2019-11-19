@@ -42,9 +42,10 @@ public class Maze {
 
     public void divide(int x1, int x2, int y1, int y2) {
         if (x2 - x1 > 1 || y2 - y1 > 1) {
-            Random straight = new Random();
-            int whichStraight = straight.nextInt(2);
-            if (whichStraight == 0 && x2 - x1 > 1) {
+            //Random straight = new Random();
+            //int whichStraight = straight.nextInt(2);
+            //if (whichStraight == 0 && x2 - x1 > 1) {
+            if (x2 - x1 > y2 - y1 && x2 - x1 > 1) {
                 Random whereDraw = new Random();
                 if (y2 > y1) {
                     int where = whereDraw.nextInt(x2 - x1) + x1;
@@ -55,7 +56,8 @@ public class Maze {
                     divide(x1, where, y1, y2);
                     divide(where + 1, x2, y1, y2);
                 }
-            } else if (whichStraight == 1 && y2 - y1 > 1) {
+                //} else if (whichStraight == 1 && y2 - y1 > 1) {
+            } else if (y2 - y1 > x2 - x1 && y2 - y1 > 1) {
                 Random whereDraw = new Random();
                 if (x2 > x1) {
                     int where = whereDraw.nextInt(y2 - y1) + y1;
@@ -66,8 +68,35 @@ public class Maze {
                     divide(x1, x2, y1, where);
                     divide(x1, x2, where + 1, y2);
                 }
-            }
+            } else {
+                Random straight = new Random();
+                int whichStraight = straight.nextInt(2);
+                if (whichStraight == 0 && x2 - x1 > 1) {
+                    Random whereDraw = new Random();
+                    if (y2 > y1) {
+                        int where = whereDraw.nextInt(x2 - x1) + x1;
+                        while (where % 2 != 0) {
+                            where = whereDraw.nextInt(x2 - x1) + x1;
+                        }
+                        drawVertical(y1, y2, where);
+                        divide(x1, where, y1, y2);
+                        divide(where + 1, x2, y1, y2);
+                    }
+                } else if (whichStraight == 1 && y2 - y1 > 1) {
+                    Random whereDraw = new Random();
+                    if (x2 > x1) {
+                        int where = whereDraw.nextInt(y2 - y1) + y1;
+                        while (where % 2 != 0) {
+                            where = whereDraw.nextInt(y2 - y1) + y1;
+                        }
+                        drawHorizontal(x1, x2, where);
+                        divide(x1, x2, y1, where);
+                        divide(x1, x2, where + 1, y2);
 
+                    }
+
+                }
+            }
         }
     }
 
