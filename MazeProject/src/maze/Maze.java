@@ -5,6 +5,7 @@
  */
 package maze;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Random;
 
@@ -22,6 +23,14 @@ public class Maze {
         this.height = hei;
         this.width = wid;
         this.maze = new Cell[2 * hei + 1][2 * wid + 1];
+    }
+
+    public Maze(String fileName) throws FileNotFoundException {
+        ReadFile readFile = new ReadFile(fileName);
+        height = readFile.countNubmberOfRows() / 2;
+        width = readFile.countNumberOfColumns() / 2;
+        maze = new Cell[2 * height + 1][2 * width + 1];
+        readFile.setMaze(this);
     }
 
     public void generate() {
@@ -163,6 +172,11 @@ public class Maze {
         }
     }
 
+    public void writeMaze(String fileName) throws IOException {
+        WriteFile writeFile = new WriteFile(fileName);
+        writeFile.writeMatrix(this);
+    }
+
     public int getWidth() {
         return width;
     }
@@ -176,9 +190,8 @@ public class Maze {
 
     }
 
-    public void writeMaze(String fileName) throws IOException {
-        WriteFile wf = new WriteFile(fileName, this);
-        wf.writeMatrix();
+    public void setCell(int i, int j, Cell state) {
+        maze[i][j] = state;
     }
 
 }
