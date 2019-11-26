@@ -16,13 +16,45 @@ public class Node {
     private Node left;
     private Node right;
     private int ID;
-    
-    public Node(int id){
+
+    public Node(int id) {
         this.ID = id;
     }
 
     public int getID() {
         return ID;
     }
-    
+
+    public Node getTop() {
+        return top;
+    }
+
+    public Node getBottom() {
+        return bottom;
+    }
+
+    public Node getLeft() {
+        return left;
+    }
+
+    public Node getRight() {
+        return right;
+    }
+
+    public void setTop(Node top) {
+        this.top = top;
+    }
+
+    public void setBottom(Node bottom) {
+        this.bottom = bottom;
+    }
+
+    public void setLeft(Node left) {
+        this.left = left;
+    }
+
+    public void setRight(Node right) {
+        this.right = right;
+    }
+
 }
