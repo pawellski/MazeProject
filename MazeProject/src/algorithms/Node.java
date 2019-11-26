@@ -15,6 +15,15 @@ public class Node {
     private Node bottom;
     private Node left;
     private Node right;
+
+    public Node getPredecessor() {
+        return predecessor;
+    }
+    private Node predecessor;
+
+    public void setPredecessor(Node predecessor) {
+        this.predecessor = predecessor;
+    }
     private int ID;
 
     public Node(int id) {
