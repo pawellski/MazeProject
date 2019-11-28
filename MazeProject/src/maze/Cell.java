@@ -13,5 +13,8 @@ public enum Cell {
     ENTRANCE,
     EXIT,
     WALLL,
-    FIELD
+    FIELD,
+    FIRST,
+    SECOND,
+    SOLVE
 }
