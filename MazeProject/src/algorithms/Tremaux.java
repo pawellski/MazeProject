@@ -38,26 +38,30 @@ public class Tremaux {
         direction = 0;
     }
 
+    public void setActualPoint(int i, int j) {
+        actualPosition = new Point(i, j);
+    }
+
     public void solve() {
         //while (actualPosition.getI() != exit.getI() && actualPosition.getJ() != exit.getJ()) {
-            int option = chooseDirection();
-            if (option == -1) {
-                System.out.println("Ide w lewo");
+        int option = chooseDirection();
+        if (option == -1) {
+            System.out.println("Ide w lewo");
 
-            } else if (option == -2) {
-                System.out.println("Ide w gore");
+        } else if (option == -2) {
+            System.out.println("Ide w gore");
 
-            } else if (option == 1) {
-                System.out.println("Ide w prawo");
-            } else if (option == 2) {
-                System.out.println("Ide w dol");
-            } else {
-                //blad?
-                System.out.println("Nie wiem gdzie ide");
-            }
-            for(int x : randomDirection){
-                System.out.println(x);
-            }
+        } else if (option == 1) {
+            System.out.println("Ide w prawo");
+        } else if (option == 2) {
+            System.out.println("Ide w dol");
+        } else {
+            //blad?
+            System.out.println("Nie wiem gdzie ide");
+        }
+        for (int x : randomDirection) {
+            System.out.println(x);
+        }
         //}
     }
 
@@ -154,12 +158,14 @@ public class Tremaux {
                 return false;
             }
 
-        } else {
+        } else if (backward == 2) {
             if (mazeToSolve[actualPosition.getI() + 1][actualPosition.getJ()] == Cell.FIRST) {
                 return true;
             } else {
                 return false;
             }
+        } else {
+            return false;
         }
     }
 
