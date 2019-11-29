@@ -126,11 +126,14 @@ public class Tremaux {
                 randomDirection = new ArrayList<>();
                 if (mazeToSolve[actualPosition.getI()][actualPosition.getJ() - 1] == Cell.FIRST) {
                     randomDirection.add(-1);
-                } else if (mazeToSolve[actualPosition.getI() - 1][actualPosition.getJ()] == Cell.FIRST) {
+                }
+                if (mazeToSolve[actualPosition.getI() - 1][actualPosition.getJ()] == Cell.FIRST) {
                     randomDirection.add(-2);
-                } else if (mazeToSolve[actualPosition.getI()][actualPosition.getJ() + 1] == Cell.FIRST) {
+                }
+                if (mazeToSolve[actualPosition.getI()][actualPosition.getJ() + 1] == Cell.FIRST) {
                     randomDirection.add(1);
-                } else if (mazeToSolve[actualPosition.getI() + 1][actualPosition.getJ()] == Cell.FIRST) {
+                }
+                if (mazeToSolve[actualPosition.getI() + 1][actualPosition.getJ()] == Cell.FIRST) {
                     randomDirection.add(2);
                 }
                 return whereTurn(randomDirection);
