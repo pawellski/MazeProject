@@ -40,6 +40,7 @@ public class Tremaux {
 
     public void setActualPoint(int i, int j) {
         actualPosition = new Point(i, j);
+        direction = 1;
     }
 
     public void solve() {
@@ -119,7 +120,7 @@ public class Tremaux {
             return whereTurn(randomDirection);
         } else {
             //try to backward            
-            if (checkEnterForBackward(direction)) {
+            if (checkEnterForBackward(direction*(-1))) {
                 return direction * (-1);
             } else {
                 // search the best option
