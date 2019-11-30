@@ -16,5 +16,5 @@ public enum Cell {
     FIELD,
     FIRST,
     SECOND,
-    SOLVE
+    SOLVED
 }
