@@ -11,8 +11,8 @@ package algorithms;
  */
 public class Node {
 
-    private Node top;
-    private Node bottom;
+    private Node up;
+    private Node down;
     private Node left;
     private Node right;
     private Node predecessor;
@@ -26,12 +26,12 @@ public class Node {
         return ID;
     }
 
-    public Node getTop() {
-        return top;
+    public Node getUp() {
+        return up;
     }
 
-    public Node getBottom() {
-        return bottom;
+    public Node getDown() {
+        return down;
     }
 
     public Node getLeft() {
@@ -42,12 +42,16 @@ public class Node {
         return right;
     }
 
-    public void setTop(Node top) {
-        this.top = top;
+    public Node getPredecessor() {
+        return predecessor;
     }
 
-    public void setBottom(Node bottom) {
-        this.bottom = bottom;
+    public void setUp(Node up) {
+        this.up = up;
+    }
+
+    public void setDown(Node down) {
+        this.down = down;
     }
 
     public void setLeft(Node left) {
@@ -56,10 +60,6 @@ public class Node {
 
     public void setRight(Node right) {
         this.right = right;
-    }
-
-    public Node getPredecessor() {
-        return predecessor;
     }
 
     public void setPredecessor(Node predecessor) {
