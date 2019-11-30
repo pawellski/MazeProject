@@ -16,10 +16,6 @@ import maze.Maze;
  */
 public class Tremaux {
 
-    //right = 1;
-    //left = -1;
-    //down = 2;
-    //up = -2;
     private Maze maze;
     private Point entrance;
     private Point exit;
@@ -28,6 +24,10 @@ public class Tremaux {
     private Cell[][] mazeToSolve;
     private int direction;
 
+    //right = 1;
+    //left = -1;
+    //down = 2;
+    //up = -2;
     public Tremaux(Maze maze) {
         this.maze = maze;
         searchEntrance();
@@ -38,32 +38,36 @@ public class Tremaux {
         direction = 0;
     }
 
-    public void setActualPoint(int i, int j) {
-        actualPosition = new Point(i, j);
-        direction = 1;
+    public void solve() {
+        while (actualPosition.getI() != exit.getI() || actualPosition.getJ() != exit.getJ()) {
+            int option = chooseDirection();
+            if (option == -1) {
+                //System.out.println("Ide w lewo");
+                goHorizontal(-2, 1, -1);
+                direction = -1;
+            } else if (option == -2) {
+                //System.out.println("Ide w gore");
+                goVertical(-2, 1, -1);
+                direction = -2;
+            } else if (option == 1) {
+                //System.out.println("Ide w prawo");
+                //goRight();
+                goHorizontal(2, -1, 1);
+                direction = 1;
+            } else if (option == 2) {
+                //System.out.println("Ide w dol");
+                goVertical(2, -1, 1);
+                direction = 2;
+            } else {
+                //blad?
+                System.err.println("Error");
+            }
+        }
     }
 
-    public void solve() {
-        //while (actualPosition.getI() != exit.getI() && actualPosition.getJ() != exit.getJ()) {
-        int option = chooseDirection();
-        if (option == -1) {
-            System.out.println("Ide w lewo");
-
-        } else if (option == -2) {
-            System.out.println("Ide w gore");
-
-        } else if (option == 1) {
-            System.out.println("Ide w prawo");
-        } else if (option == 2) {
-            System.out.println("Ide w dol");
-        } else {
-            //blad?
-            System.out.println("Nie wiem gdzie ide");
-        }
-        for (int x : randomDirection) {
-            System.out.println(x);
-        }
-        //}
+    public void printEntranceAndExit() {
+        System.out.println(entrance.getI() + " " + entrance.getJ());
+        System.out.println(exit.getI() + " " + exit.getJ());
     }
 
     private void searchEntrance() {
@@ -77,14 +81,9 @@ public class Tremaux {
     private void searchExit() {
         for (int i = 1; i < 2 * maze.getWidth(); i += 2) {
             if (maze.getCell(2 * maze.getHeight(), i) == Cell.EXIT) {
-                exit = new Point(2 * maze.getWidth() - 1, i);
+                exit = new Point(2 * maze.getHeight() - 1, i);
             }
         }
-    }
-
-    public void printEntranceAndExit() {
-        System.out.println(entrance.getI() + " " + entrance.getJ());
-        System.out.println(exit.getI() + " " + exit.getJ());
     }
 
     private int whereTurn(ArrayList<Integer> table) {
@@ -104,23 +103,23 @@ public class Tremaux {
 
     private int chooseDirection() {
         randomDirection = new ArrayList<>();
-        if (mazeToSolve[actualPosition.getI()][actualPosition.getJ() - 1] == Cell.FIELD && direction != -1) {
+        if (mazeToSolve[actualPosition.getI()][actualPosition.getJ() - 1] == Cell.FIELD) {
             randomDirection.add(-1);
         }
-        if (mazeToSolve[actualPosition.getI() - 1][actualPosition.getJ()] == Cell.FIELD && direction != -2 && actualPosition.getI() - 1 != 0) {
+        if (mazeToSolve[actualPosition.getI() - 1][actualPosition.getJ()] == Cell.FIELD && actualPosition.getI() - 1 != 0) {
             randomDirection.add(-2);
         }
-        if (mazeToSolve[actualPosition.getI()][actualPosition.getJ() + 1] == Cell.FIELD && direction != 1) {
+        if (mazeToSolve[actualPosition.getI()][actualPosition.getJ() + 1] == Cell.FIELD) {
             randomDirection.add(1);
         }
-        if (mazeToSolve[actualPosition.getI() + 1][actualPosition.getJ()] == Cell.FIELD && direction != 2) {
+        if (mazeToSolve[actualPosition.getI() + 1][actualPosition.getJ()] == Cell.FIELD) {
             randomDirection.add(2);
         }
         if (randomDirection.size() > 0) {
             return whereTurn(randomDirection);
         } else {
             //try to backward            
-            if (checkEnterForBackward(direction*(-1))) {
+            if (checkEnterForBackward(direction * (-1))) {
                 return direction * (-1);
             } else {
                 // search the best option
@@ -137,7 +136,12 @@ public class Tremaux {
                 if (mazeToSolve[actualPosition.getI() + 1][actualPosition.getJ()] == Cell.FIRST) {
                     randomDirection.add(2);
                 }
-                return whereTurn(randomDirection);
+                if (randomDirection.size() > 0) {
+                    return whereTurn(randomDirection);
+                } else {
+                    System.err.println("Error!!!");
+                    return -100;
+                }
             }
         }
     }
@@ -173,6 +177,97 @@ public class Tremaux {
         }
     }
 
+    // w gore => i = -2, j = 1, k = -1
+    // w dol => i = 2, j = -1, k = 1
+    private void goVertical(int i, int j, int k) {
+        int index = 0;
+        actualPosition.setI(actualPosition.getI() + i);
+
+        if (mazeToSolve[actualPosition.getI() + j][actualPosition.getJ()] == Cell.FIELD) {
+            mazeToSolve[actualPosition.getI() + j][actualPosition.getJ()] = Cell.FIRST;
+        } else {
+            mazeToSolve[actualPosition.getI() + j][actualPosition.getJ()] = Cell.SECOND;
+        }
+
+        while (mazeToSolve[actualPosition.getI()][actualPosition.getJ() - 1] == Cell.WALLL
+                && mazeToSolve[actualPosition.getI()][actualPosition.getJ() + 1] == Cell.WALLL
+                && (mazeToSolve[actualPosition.getI() + k][actualPosition.getJ()] == Cell.FIELD
+                || mazeToSolve[actualPosition.getI() + k][actualPosition.getJ()] == Cell.FIRST)) {
+            index++;
+            actualPosition.setI(actualPosition.getI() + i);
+            if (mazeToSolve[actualPosition.getI() + 1][actualPosition.getJ()] == Cell.EXIT) {
+                break;
+            }
+        }
+        if (index > 0) {
+            if (mazeToSolve[actualPosition.getI() + j][actualPosition.getJ()] == Cell.FIELD) {
+                mazeToSolve[actualPosition.getI() + j][actualPosition.getJ()] = Cell.FIRST;
+            } else {
+                mazeToSolve[actualPosition.getI() + j][actualPosition.getJ()] = Cell.SECOND;
+            }
+        }
+    }
+
+    //w lewo => i = -2 j = 1 k = -1
+    // w prawo => i = 2 j = -1 k =1
+    private void goHorizontal(int i, int j, int k) {
+        int index = 0;
+        actualPosition.setJ(actualPosition.getJ() + i);
+
+        if (mazeToSolve[actualPosition.getI()][actualPosition.getJ() + j] == Cell.FIELD) {
+            mazeToSolve[actualPosition.getI()][actualPosition.getJ() + j] = Cell.FIRST;
+        } else {
+            mazeToSolve[actualPosition.getI()][actualPosition.getJ() + j] = Cell.SECOND;
+        }
+
+        while ((mazeToSolve[actualPosition.getI() - 1][actualPosition.getJ()] == Cell.WALLL
+                || mazeToSolve[actualPosition.getI() - 1][actualPosition.getJ()] == Cell.ENTRANCE)
+                && mazeToSolve[actualPosition.getI() + 1][actualPosition.getJ()] == Cell.WALLL
+                && (mazeToSolve[actualPosition.getI()][actualPosition.getJ() + k] == Cell.FIELD
+                || mazeToSolve[actualPosition.getI()][actualPosition.getJ() + k] == Cell.FIRST)) {
+            index++;
+            actualPosition.setJ(actualPosition.getJ() + i);
+            if (mazeToSolve[actualPosition.getI() + 1][actualPosition.getJ()] == Cell.EXIT) {
+                break;
+            }
+        }
+        if (index > 0) {
+            if (mazeToSolve[actualPosition.getI()][actualPosition.getJ() + j] == Cell.FIELD) {
+                mazeToSolve[actualPosition.getI()][actualPosition.getJ() + j] = Cell.FIRST;
+            } else {
+                mazeToSolve[actualPosition.getI()][actualPosition.getJ() + j] = Cell.SECOND;
+            }
+        }
+    }
+
+    //wyswietlenie w celu zobrazowania w automacie CA
+    public void displayCA() {
+        for (int i = 0; i < mazeToSolve.length; i++) {
+            for (int j = 0; j < mazeToSolve[0].length; j++) {
+                if (mazeToSolve[i][j] == Cell.FIELD) {
+                    System.out.print("0 ");
+                } else if (mazeToSolve[i][j] == Cell.WALLL) {
+                    System.out.print("1 ");
+                } else if (mazeToSolve[i][j] == Cell.FIRST || mazeToSolve[i][j] == Cell.EXIT || mazeToSolve[i][j] == Cell.ENTRANCE) {
+                    System.out.print("2 ");
+                } else if (mazeToSolve[i][j] == Cell.SECOND) {
+                    System.out.print("3 ");
+                }
+            }
+            System.out.println();
+        }
+    }
+
+    //wyswietlnie stanow Cell
+    public void displayLab() {
+        for (int i = 0; i < mazeToSolve.length; i++) {
+            for (int j = 0; j < mazeToSolve[0].length; j++) {
+                System.out.print(mazeToSolve[i][j] + " ");
+            }
+            System.out.println();
+        }
+    }
+
     class Point {
 
         private int i;
@@ -189,6 +284,14 @@ public class Tremaux {
 
         public int getJ() {
             return j;
+        }
+
+        public void setI(int i) {
+            this.i = i;
+        }
+
+        public void setJ(int j) {
+            this.j = j;
         }
 
     }
