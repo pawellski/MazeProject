@@ -8,6 +8,7 @@ package algorithms;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 import maze.Cell;
 import maze.Maze;
 
@@ -22,7 +23,7 @@ public class BFS {
     private List<Node> nodes;
     private static int index;
     private Maze maze;
-    private LinkedList<Node> way;
+    private Queue<Node> way;
 
     public BFS(Maze maze) {
         this.nodes = new ArrayList<Node>();
@@ -49,24 +50,24 @@ public class BFS {
 
     public void searchWay() {
         way.add(entrance);
-        while (way.getFirst() != exit) {
-            if (way.getFirst().getLeft() != null && way.getFirst().getLeft() != way.getFirst().getPredecessor()) {
-                way.add(way.getFirst().getLeft());
-                way.getLast().setPredecessor(way.getFirst());
+        while (way.element() != exit) {
+            if (way.element().getLeft() != null && way.element().getLeft() != way.element().getPredecessor()) {
+                way.add(way.element().getLeft());
+                way.element().getLeft().setPredecessor(way.element());
             }
-            if (way.getFirst().getTop() != null && way.getFirst().getTop() != way.getFirst().getPredecessor()) {
-                way.add(way.getFirst().getTop());
-                way.getLast().setPredecessor(way.getFirst());
+            if (way.element().getUp()!= null && way.element().getUp()!= way.element().getPredecessor()) {
+                way.add(way.element().getUp());
+                way.element().getUp().setPredecessor(way.element());
             }
-            if (way.getFirst().getRight() != null && way.getFirst().getRight() != way.getFirst().getPredecessor()) {
-                way.add(way.getFirst().getRight());
-                way.getLast().setPredecessor(way.getFirst());
+            if (way.element().getRight() != null && way.element().getRight() != way.element().getPredecessor()) {
+                way.add(way.element().getRight());
+                way.element().getRight().setPredecessor(way.element());
             }
-            if (way.getFirst().getBottom() != null && way.getFirst().getBottom() != way.getFirst().getPredecessor()) {
-                way.add(way.getFirst().getBottom());
-                way.getLast().setPredecessor(way.getFirst());
+            if (way.element().getDown()!= null && way.element().getDown()!= way.element().getPredecessor()) {
+                way.add(way.element().getDown());
+                way.element().getDown().setPredecessor(way.element());
             }
-            way.removeFirst();
+            way.remove();
         }
     }
 
@@ -92,18 +93,18 @@ public class BFS {
         if (maze.getCell(i, j - 1) == Cell.FIELD) {
             nodes.get(x).setLeft(nodes.get(x - 1));
         }
-        //top
+        //up
         if (maze.getCell(i - 1, j) == Cell.FIELD) {
             //top
-            nodes.get(x).setTop(nodes.get(x - maze.getWidth()));
+            nodes.get(x).setUp(nodes.get(x - maze.getWidth()));
         }
         //right
         if (maze.getCell(i, j + 1) == Cell.FIELD) {
             nodes.get(x).setRight(nodes.get(x + 1));
         }
-        //bottom
+        //down
         if (maze.getCell(i + 1, j) == Cell.FIELD) {
-            nodes.get(x).setBottom(nodes.get(x + maze.getWidth()));
+            nodes.get(x).setDown(nodes.get(x + maze.getWidth()));
         }
     }
 
