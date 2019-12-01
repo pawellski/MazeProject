@@ -67,7 +67,7 @@ public class Maze {
 
     }
 
-    public void divideWithTwoGap(int x1, int x2, int y1, int y2) {
+    private void divideWithTwoGap(int x1, int x2, int y1, int y2) {
         if (x2 - x1 > 1 || y2 - y1 > 1) {
             if (x2 - x1 > y2 - y1 && x2 - x1 > 1) {
                 if (y2 > y1) {
@@ -101,7 +101,7 @@ public class Maze {
         }
     }
 
-    public void divide(int x1, int x2, int y1, int y2) {
+    private void divide(int x1, int x2, int y1, int y2) {
         if (x2 - x1 > 1 || y2 - y1 > 1) {
             if (x2 - x1 > y2 - y1 && x2 - x1 > 1) {
                 if (y2 > y1) {
@@ -163,7 +163,7 @@ public class Maze {
         return where;
     }
 
-    public void drawWalls() {
+    private void drawWalls() {
         for (int i = 1; i < 2 * height + 1; i++) {
             for (int j = 1; j < 2 * width + 1; j++) {
                 maze[i][j] = Cell.FIELD;
@@ -181,11 +181,10 @@ public class Maze {
         }
     }
 
-    public void drawHorizontal(int x1, int x2, int y) {
+    private void drawHorizontal(int x1, int x2, int y) {
         for (int i = x1; i < x2 + 1; i++) {
             maze[y][i] = Cell.WALLL;
         }
-
         int gap = random(x1, x2);
         while (gap % 2 == 0 && gap > x1 && gap < x2) {
             gap = random(x1, x2);
@@ -193,7 +192,7 @@ public class Maze {
         maze[y][gap] = Cell.FIELD;
     }
 
-    public void drawVertical(int y1, int y2, int x) {
+    private void drawVertical(int y1, int y2, int x) {
         for (int i = y1; i < y2 + 1; i++) {
             maze[i][x] = Cell.WALLL;
         }
@@ -204,7 +203,7 @@ public class Maze {
         maze[gap][x] = Cell.FIELD;
     }
 
-    public void drawHorizontalWithTwoGap(int x1, int x2, int y) {
+    private void drawHorizontalWithTwoGap(int x1, int x2, int y) {
         for (int i = x1; i < x2 + 1; i++) {
             maze[y][i] = Cell.WALLL;
         }
@@ -227,7 +226,7 @@ public class Maze {
         }
     }
 
-    public void drawVerticalWithTwoGap(int y1, int y2, int x) {
+    private void drawVerticalWithTwoGap(int y1, int y2, int x) {
         for (int i = y1; i < y2 + 1; i++) {
             maze[i][x] = Cell.WALLL;
         }
@@ -250,7 +249,7 @@ public class Maze {
         }
     }
 
-    public int random(int a, int b) {
+    private int random(int a, int b) {
         Random randomGap = new Random();
         int gap = randomGap.nextInt(b - a) + a;
         return gap;
