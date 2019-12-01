@@ -28,6 +28,7 @@ public class TremauxSolvedTest {
 
     public void solveMaze() {
         tremaux.solveMaze();
+        System.out.println("Generated and solved maze");
         tremaux.displaySolved();
     }
 
