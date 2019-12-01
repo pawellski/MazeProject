@@ -36,7 +36,7 @@ public class WriteFile {
                 } else if (maze.getCell(i, j) == Cell.EXIT) {
                     printWriter.print("* ");
                 } else if (maze.getCell(i, j) == Cell.WALLL) {
-                    printWriter.print("1 ");
+                    printWriter.print("+ ");
                 } else {
                     printWriter.print("0 ");
                 }
