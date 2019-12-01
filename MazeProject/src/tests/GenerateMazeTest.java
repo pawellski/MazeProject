@@ -33,4 +33,8 @@ public class GenerateMazeTest {
         maze.drawMaze();
     }
     
+    public Maze getMaze() {
+        return maze;
+    }
+    
 }
