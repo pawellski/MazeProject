@@ -23,11 +23,14 @@ public class BFSSolvedTest {
     public BFSSolvedTest() {
         Maze maze = new Maze(10, 10);
         maze.generate();
+        System.out.println("Maze to solve(BFS)");
+        maze.drawMaze();
         bfs = new BFS(maze);
     }
 
     public void solveMaze() {
-        bfs.solveMaze();
+        System.out.println("Solution BFS:");
+        bfs.createAndSolveMaze();
     }
 
 }
