@@ -51,21 +51,28 @@ public class BFS {
     public void searchWay() {
         way.add(entrance);
         while (way.element() != exit) {
-            if (way.element().getLeft() != null && way.element().getLeft() != way.element().getPredecessor()) {
+            if (way.element().getLeft() != null && way.element().getLeft() != way.element().getPredecessor() && !way.element().getLeft().isSeen()) {
                 way.add(way.element().getLeft());
                 way.element().getLeft().setPredecessor(way.element());
+                way.element().getLeft().setSeen(true);
             }
-            if (way.element().getUp()!= null && way.element().getUp()!= way.element().getPredecessor()) {
+            if (way.element().getUp()!= null && way.element().getUp()!= way.element().getPredecessor() && !way.element().getUp().isSeen()) {
                 way.add(way.element().getUp());
                 way.element().getUp().setPredecessor(way.element());
+                //
+                way.element().getUp().setSeen(true);
             }
-            if (way.element().getRight() != null && way.element().getRight() != way.element().getPredecessor()) {
+            if (way.element().getRight() != null && way.element().getRight() != way.element().getPredecessor() && !way.element().getRight().isSeen()) {
                 way.add(way.element().getRight());
                 way.element().getRight().setPredecessor(way.element());
+                //
+                way.element().getRight().setSeen(true);
             }
-            if (way.element().getDown()!= null && way.element().getDown()!= way.element().getPredecessor()) {
+            if (way.element().getDown()!= null && way.element().getDown()!= way.element().getPredecessor() && !way.element().getDown().isSeen()) {
                 way.add(way.element().getDown());
                 way.element().getDown().setPredecessor(way.element());
+                //
+                way.element().getDown().setSeen(true);
             }
             way.remove();
         }
