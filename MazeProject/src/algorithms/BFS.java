@@ -21,7 +21,7 @@ public class BFS {
     private Node entrance;
     private Node exit;
     private List<Node> nodes;
-    private static int index;
+    private int index;
     private Maze maze;
     private Queue<Node> way;
 
