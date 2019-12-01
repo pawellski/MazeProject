@@ -17,6 +17,7 @@ public class Node {
     private Node right;
     private Node predecessor;
     private int ID;
+    private boolean seen;
 
     public Node(int id) {
         this.ID = id;
@@ -46,6 +47,10 @@ public class Node {
         return predecessor;
     }
 
+    public boolean isSeen() {
+        return seen;
+    }
+
     public void setUp(Node up) {
         this.up = up;
     }
@@ -64,6 +69,10 @@ public class Node {
 
     public void setPredecessor(Node predecessor) {
         this.predecessor = predecessor;
+    }
+
+    public void setIsSeen(boolean seen) {
+        this.seen = seen;
     }
 
 }
