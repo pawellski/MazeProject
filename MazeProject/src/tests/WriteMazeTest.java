@@ -24,5 +24,6 @@ public class WriteMazeTest {
             System.out.println("Bad file name!");
         }
         wf.writeMatrix(maze);
+        System.out.println("Complete saved.");
     }
 }
