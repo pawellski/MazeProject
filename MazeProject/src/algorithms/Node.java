@@ -71,7 +71,7 @@ public class Node {
         this.predecessor = predecessor;
     }
 
-    public void setIsSeen(boolean seen) {
+    public void setSeen(boolean seen) {
         this.seen = seen;
     }
 
