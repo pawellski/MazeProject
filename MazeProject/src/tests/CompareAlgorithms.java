@@ -30,20 +30,27 @@ public class CompareAlgorithms {
         long stopTremaux;
 
         startBFS = System.nanoTime();
-        bfs.solveMaze();
+        bfs.createGraph();
+        bfs.searchWay();
         stopBFS = System.nanoTime();
-
+        System.out.println();
+        System.out.println("Solutions BFS:");
+        bfs.showWay();
+        
         startTremaux = System.nanoTime();
         treamux.solveMaze();
         stopTremaux = System.nanoTime();
+        System.out.println();
+        System.out.println("Solution Treamux:");
+        treamux.displaySolved();
         
         System.out.println("Czas dzialania algorytmu BFS = " + (stopBFS - startBFS));
         System.out.println("Czas dzialania algorytmu Tremaux = " + (stopTremaux - startTremaux));
 
         if( (stopBFS - startBFS) > (stopTremaux - startTremaux)){
-            System.out.println("Algorytm Treamux znalazl droge szybciej o " + ((stopTremaux - startTremaux) - (stopBFS - startBFS)));
+            System.out.println("Algorytm Treamux znalazl droge szybciej o " + ((stopBFS - startBFS) - (stopTremaux - startTremaux)));
         } else {
-            System.out.println("Algorytm BFS znalazl droge szybciej o " + ((stopBFS - startBFS) - (stopTremaux - startTremaux)));
+            System.out.println("Algorytm BFS znalazl droge szybciej o " + ((stopTremaux - startTremaux) - (stopBFS - startBFS)));
         }
     }
 }
