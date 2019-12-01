@@ -308,29 +308,33 @@ public class Tremaux {
         }
     }
 
-    //wyswietlenie w celu zobrazowania w automacie CA
-    public void displayCA() {
+    public void displaySolved() {
         for (int i = 0; i < mazeToSolve.length; i++) {
             for (int j = 0; j < mazeToSolve[0].length; j++) {
-                if (mazeToSolve[i][j] == Cell.FIELD || mazeToSolve[i][j] == Cell.FIRST) {
+                if(mazeToSolve[i][j] == Cell.WALLL){
+                    System.out.print("+ ");
+                } else if(mazeToSolve[i][j] == Cell.SOLVED){
+                    System.out.print("X ");
+                } else if (mazeToSolve[i][j] == Cell.ENTRANCE){
+                    System.out.print("# ");
+                } else if(mazeToSolve[i][j] == Cell.EXIT){
+                    System.out.print("* ");
+                } else {
                     System.out.print("0 ");
-                } else if (mazeToSolve[i][j] == Cell.WALLL) {
-                    System.out.print("1 ");
-                } else if (mazeToSolve[i][j] == Cell.EXIT || mazeToSolve[i][j] == Cell.ENTRANCE || mazeToSolve[i][j] == Cell.SOLVED) {
-                    System.out.print("2 ");
-                } else if (mazeToSolve[i][j] == Cell.SECOND) {
-                    System.out.print("3 ");
                 }
             }
             System.out.println();
         }
     }
 
-    //wyswietlnie stanow Cell
-    public void displayLab() {
+    public void displayStates() {
         for (int i = 0; i < mazeToSolve.length; i++) {
             for (int j = 0; j < mazeToSolve[0].length; j++) {
-                System.out.print(mazeToSolve[i][j] + " ");
+                if(mazeToSolve[i][j] == Cell.ENTRANCE){
+                    System.out.print("ENTER\t");
+                } else {
+                    System.out.print(mazeToSolve[i][j] + "\t");
+                }
             }
             System.out.println();
         }
