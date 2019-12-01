@@ -37,7 +37,7 @@ public class ReadFile {
         while (!(scannerColumns.hasNext("/maze"))) {
             line = scannerColumns.nextLine().replaceAll(" ", "").length();
             if (line != numberOfColumns) {
-                throw new NoSuchElementException("Zły format pliku");
+                throw new NoSuchElementException("Wrong file format!");
             }
         }
         return numberOfColumns;
@@ -63,7 +63,7 @@ public class ReadFile {
                     case "*":
                         maze.setCell(i, j, Cell.EXIT);
                         break;
-                    case "1":
+                    case "+":
                         maze.setCell(i, j, Cell.WALLL);
                         break;
                     case "0":
