@@ -261,9 +261,11 @@ public class Maze {
                 if (maze[i][j] == Cell.FIELD) {
                     System.out.print("0 ");
                 } else if (maze[i][j] == Cell.WALLL) {
-                    System.out.print("1 ");
+                    System.out.print("+ ");
+                } else if (maze[i][j] == Cell.ENTRANCE){
+                    System.out.print("# ");
                 } else {
-                    System.out.print("0 ");
+                    System.out.print("* ");
                 }
             }
             System.out.println();
