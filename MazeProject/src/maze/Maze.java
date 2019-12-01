@@ -50,31 +50,68 @@ public class Maze {
 
     }
 
+    public void generateWithTwoGaps() {
+        drawWalls();
+        divideWithTwoGap(1, 2 * width - 1, 1, 2 * height - 1);
+        int entrance = random(1, 2 * width - 1);
+        while (entrance % 2 == 0) {
+            entrance = random(1, 2 * width - 1);
+        }
+        maze[0][entrance] = Cell.ENTRANCE;
+
+        int exit = random(1, 2 * width - 1);
+        while (exit % 2 == 0) {
+            exit = random(1, 2 * width - 1);
+        }
+        maze[2 * height][exit] = Cell.EXIT;
+
+    }
+
+    public void divideWithTwoGap(int x1, int x2, int y1, int y2) {
+        if (x2 - x1 > 1 || y2 - y1 > 1) {
+            if (x2 - x1 > y2 - y1 && x2 - x1 > 1) {
+                if (y2 > y1) {
+                    int where = divideVertical(x1, x2, y1, y2, true);
+                    divideWithTwoGap(x1, where - 1, y1, y2);
+                    divideWithTwoGap(where + 1, x2, y1, y2);
+                }
+            } else if (y2 - y1 > x2 - x1 && y2 - y1 > 1) {
+                if (x2 > x1) {
+                    int where = divideHorizontal(x1, x2, y1, y2, true);
+                    divideWithTwoGap(x1, x2, y1, where - 1);
+                    divideWithTwoGap(x1, x2, where + 1, y2);
+                }
+            } else {
+                Random straight = new Random();
+                int whichStraight = straight.nextInt(2);
+                if (whichStraight == 0 && x2 - x1 > 1) {
+                    if (y2 > y1) {
+                        int where = divideVertical(x1, x2, y1, y2, true);
+                        divideWithTwoGap(x1, where - 1, y1, y2);
+                        divideWithTwoGap(where + 1, x2, y1, y2);
+                    }
+                } else if (whichStraight == 1 && y2 - y1 > 1) {
+                    if (x2 > x1) {
+                        int where = divideHorizontal(x1, x2, y1, y2, true);
+                        divideWithTwoGap(x1, x2, y1, where - 1);
+                        divideWithTwoGap(x1, x2, where + 1, y2);
+                    }
+                }
+            }
+        }
+    }
+
     public void divide(int x1, int x2, int y1, int y2) {
         if (x2 - x1 > 1 || y2 - y1 > 1) {
-            //Random straight = new Random();
-            //int whichStraight = straight.nextInt(2);
-            //if (whichStraight == 0 && x2 - x1 > 1) {
             if (x2 - x1 > y2 - y1 && x2 - x1 > 1) {
-                Random whereDraw = new Random();
                 if (y2 > y1) {
-                    int where = whereDraw.nextInt(x2 - x1) + x1;
-                    while (where % 2 != 0) {
-                        where = whereDraw.nextInt(x2 - x1) + x1;
-                    }
-                    drawVertical(y1, y2, where);
+                    int where = divideVertical(x1, x2, y1, y2, false);
                     divide(x1, where, y1, y2);
                     divide(where + 1, x2, y1, y2);
                 }
-                //} else if (whichStraight == 1 && y2 - y1 > 1) {
             } else if (y2 - y1 > x2 - x1 && y2 - y1 > 1) {
-                Random whereDraw = new Random();
                 if (x2 > x1) {
-                    int where = whereDraw.nextInt(y2 - y1) + y1;
-                    while (where % 2 != 0) {
-                        where = whereDraw.nextInt(y2 - y1) + y1;
-                    }
-                    drawHorizontal(x1, x2, where);
+                    int where = divideHorizontal(x1, x2, y1, y2, false);
                     divide(x1, x2, y1, where);
                     divide(x1, x2, where + 1, y2);
                 }
@@ -82,32 +119,48 @@ public class Maze {
                 Random straight = new Random();
                 int whichStraight = straight.nextInt(2);
                 if (whichStraight == 0 && x2 - x1 > 1) {
-                    Random whereDraw = new Random();
                     if (y2 > y1) {
-                        int where = whereDraw.nextInt(x2 - x1) + x1;
-                        while (where % 2 != 0) {
-                            where = whereDraw.nextInt(x2 - x1) + x1;
-                        }
-                        drawVertical(y1, y2, where);
+                        int where = divideVertical(x1, x2, y1, y2, false);
                         divide(x1, where, y1, y2);
                         divide(where + 1, x2, y1, y2);
                     }
                 } else if (whichStraight == 1 && y2 - y1 > 1) {
-                    Random whereDraw = new Random();
                     if (x2 > x1) {
-                        int where = whereDraw.nextInt(y2 - y1) + y1;
-                        while (where % 2 != 0) {
-                            where = whereDraw.nextInt(y2 - y1) + y1;
-                        }
-                        drawHorizontal(x1, x2, where);
+                        int where = divideHorizontal(x1, x2, y1, y2, false);
                         divide(x1, x2, y1, where);
                         divide(x1, x2, where + 1, y2);
-
                     }
-
                 }
             }
         }
+    }
+
+    private int divideHorizontal(int x1, int x2, int y1, int y2, boolean withTwoGap) {
+        Random whereDraw = new Random();
+        int where = whereDraw.nextInt(y2 - y1) + y1;
+        while (where % 2 != 0) {
+            where = whereDraw.nextInt(y2 - y1) + y1;
+        }
+        if (withTwoGap) {
+            drawHorizontalWithTwoGap(x1, x2, where);
+        } else {
+            drawHorizontal(x1, x2, where);
+        }
+        return where;
+    }
+
+    private int divideVertical(int x1, int x2, int y1, int y2, boolean withTwoGap) {
+        Random whereDraw = new Random();
+        int where = whereDraw.nextInt(x2 - x1) + x1;
+        while (where % 2 != 0) {
+            where = whereDraw.nextInt(x2 - x1) + x1;
+        }
+        if (withTwoGap) {
+            drawVerticalWithTwoGap(y1, y2, where);
+        } else {
+            drawVertical(y1, y2, where);
+        }
+        return where;
     }
 
     public void drawWalls() {
@@ -149,6 +202,52 @@ public class Maze {
             gap = random(y1, y2);
         }
         maze[gap][x] = Cell.FIELD;
+    }
+
+    public void drawHorizontalWithTwoGap(int x1, int x2, int y) {
+        for (int i = x1; i < x2 + 1; i++) {
+            maze[y][i] = Cell.WALLL;
+        }
+        int gap = random(x1, x2);
+        int gap2 = random(x1, x2);
+        if (x2 - x1 > 9) {
+            while (gap % 2 == 0 && gap > x1 && gap < x2) {
+                gap = random(x1, x2);
+            }
+            while (gap2 % 2 == 0 && gap2 > x1 && gap2 < x2 && gap2 != gap) {
+                gap2 = random(x1, x2);
+            }
+            maze[y][gap] = Cell.FIELD;
+            maze[y][gap2] = Cell.FIELD;
+        } else {
+            while (gap % 2 == 0 && gap > x1 && gap < x2) {
+                gap = random(x1, x2);
+            }
+            maze[y][gap] = Cell.FIELD;
+        }
+    }
+
+    public void drawVerticalWithTwoGap(int y1, int y2, int x) {
+        for (int i = y1; i < y2 + 1; i++) {
+            maze[i][x] = Cell.WALLL;
+        }
+        int gap = random(y1, y2);
+        int gap2 = random(y1, y2);
+        if (y2 - y1 > 9) {
+            while (gap % 2 == 0 && gap > y1 && gap < y2) {
+                gap = random(y1, y2);
+            }
+            while (gap2 % 2 == 0 && gap2 > y1 && gap2 < y2 && gap2 != gap) {
+                gap2 = random(y1, y2);
+            }
+            maze[gap][x] = Cell.FIELD;
+            maze[gap2][x] = Cell.FIELD;
+        } else {
+            while (gap % 2 == 0 && gap > y1 && gap < y2) {
+                gap = random(y1, y2);
+            }
+            maze[gap][x] = Cell.FIELD;
+        }
     }
 
     public int random(int a, int b) {
