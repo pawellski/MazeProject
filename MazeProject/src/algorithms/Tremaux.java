@@ -37,7 +37,7 @@ public class Tremaux {
         copyMaze();
         direction = 0;
     }
-    
+
     public void solveMaze() {
         exploreExit();
         exploreWay();
@@ -47,25 +47,21 @@ public class Tremaux {
         while (actualPosition.getI() != exit.getI() || actualPosition.getJ() != exit.getJ()) {
             int option = chooseDirection();
             if (option == -1) {
-                //System.out.println("Ide w lewo");
                 goHorizontal(-2, 1, -1);
                 direction = -1;
             } else if (option == -2) {
-                //System.out.println("Ide w gore");
                 goVertical(-2, 1, -1);
                 direction = -2;
             } else if (option == 1) {
-                //System.out.println("Ide w prawo");
-                //goRight();
                 goHorizontal(2, -1, 1);
                 direction = 1;
             } else if (option == 2) {
-                //System.out.println("Ide w dol");
                 goVertical(2, -1, 1);
                 direction = 2;
             } else {
-                //blad?
                 System.err.println("Error");
+                System.err.println("I can not search exit!");
+                break;
             }
         }
     }
