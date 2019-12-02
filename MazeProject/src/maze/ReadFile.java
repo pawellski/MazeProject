@@ -46,10 +46,10 @@ public class ReadFile {
     }
 
     public int countNumberOfColumns() throws FileNotFoundException, IOException {
-        numberOfColumns = brColumns.readLine().replaceAll(" ", "").length();
+        numberOfColumns = brColumns.readLine().length();
         int line;
         while (brColumns.readLine() != null) {
-            line = brColumns.readLine().replaceAll(" ", "").length();
+            line = brColumns.readLine().length();
             if (line != numberOfColumns) {
                 throw new NoSuchElementException("Wrong file format!");
             }
@@ -59,19 +59,21 @@ public class ReadFile {
 
     public void setMaze(Maze maze) {
         for (int i = 0; i < numberOfRows; i++) {
+            String line = scanner.next();
             for (int j = 0; j < numberOfColumns; j++) {
-                switch (scanner.next()) {
-                    case "#":
+                switch (line.charAt(j)) {
+                    case '#':
                         maze.setCell(i, j, Cell.ENTRANCE);
                         break;
-                    case "*":
+                    case '*':
                         maze.setCell(i, j, Cell.EXIT);
                         break;
-                    case "+":
+                    case '+':
                         maze.setCell(i, j, Cell.WALLL);
                         break;
-                    case "0":
+                    case '0':
                         maze.setCell(i, j, Cell.FIELD);
+                        break;
                 }
             }
         }
