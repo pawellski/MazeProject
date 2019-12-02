@@ -6,6 +6,7 @@
 package tests;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import maze.Maze;
 
 /**
@@ -16,11 +17,13 @@ public class ReadMazeTest {
 
     private Maze maze;
 
-    public ReadMazeTest(String filename) {
+    public ReadMazeTest(String filename)  {
         try {
             maze = new Maze(filename);
         } catch (FileNotFoundException e) {
             System.out.println("The file does not exist!");
+        } catch (IOException e){
+            System.out.println("Wrong format!");
         }
     }
 
