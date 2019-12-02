@@ -30,13 +30,13 @@ public class WriteFile {
         for (int i = 0; i < (2 * maze.getHeight() + 1); i++) {
             for (int j = 0; j < (2 * maze.getWidth() + 1); j++) {
                 if (maze.getCell(i, j) == Cell.ENTRANCE) {
-                    printWriter.print("# ");
+                    printWriter.print("#");
                 } else if (maze.getCell(i, j) == Cell.EXIT) {
-                    printWriter.print("* ");
+                    printWriter.print("*");
                 } else if (maze.getCell(i, j) == Cell.WALLL) {
-                    printWriter.print("+ ");
+                    printWriter.print("+");
                 } else {
-                    printWriter.print("0 ");
+                    printWriter.print("0");
                 }
             }
             printWriter.println();
