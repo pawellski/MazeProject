@@ -9,7 +9,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import maze.Maze;
 import tests.BFSSolvedTest;
-import tests.CompareAlgorithms;
+import tests.CompareAlgorithmsTest;
+import tests.CompareTimeTest;
 import tests.GenerateMazeTest;
 import tests.ReadMazeTest;
 import tests.TremauxSolvedTest;
@@ -55,11 +56,19 @@ public class Main {
 
         System.out.println("COMPARE ALGORITHMS TEST");
         System.out.println("The maze to solve:");
-        Maze maze = new Maze(30, 30);
+        Maze maze = new Maze(10, 10);
         maze.generate();
         maze.drawMaze();
-        CompareAlgorithms ca = new CompareAlgorithms(maze);
-        ca.compareTime();
+        CompareAlgorithmsTest cat = new CompareAlgorithmsTest(maze);
+        cat.compareTime();
+        System.out.println();
+        
+        System.out.println("COMPARE TIME TEST");
+        CompareTimeTest ctt = new CompareTimeTest();
+        ctt.compareTime(50, 10);
+        ctt.displayBFSTime();
+        System.out.println();
+        ctt.displayTremauxTime();
     }
 
 }
