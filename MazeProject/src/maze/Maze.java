@@ -68,68 +68,52 @@ public class Maze {
     }
 
     private void divideWithTwoGap(int x1, int x2, int y1, int y2) {
-        if (x2 - x1 > 1 || y2 - y1 > 1) {
-            if (x2 - x1 > y2 - y1 && x2 - x1 > 1) {
-                if (y2 > y1) {
-                    int where = divideVertical(x1, x2, y1, y2, true);
-                    divideWithTwoGap(x1, where - 1, y1, y2);
-                    divideWithTwoGap(where + 1, x2, y1, y2);
-                }
-            } else if (y2 - y1 > x2 - x1 && y2 - y1 > 1) {
-                if (x2 > x1) {
-                    int where = divideHorizontal(x1, x2, y1, y2, true);
-                    divideWithTwoGap(x1, x2, y1, where - 1);
-                    divideWithTwoGap(x1, x2, where + 1, y2);
-                }
+        if (x2 - x1 > 1 && y2 - y1 > 1) {
+            if (x2 - x1 > y2 - y1) {
+                int where = divideVertical(x1, x2, y1, y2, true);
+                divideWithTwoGap(x1, where - 1, y1, y2);
+                divideWithTwoGap(where + 1, x2, y1, y2);
+            } else if (y2 - y1 > x2 - x1) {
+                int where = divideHorizontal(x1, x2, y1, y2, true);
+                divideWithTwoGap(x1, x2, y1, where - 1);
+                divideWithTwoGap(x1, x2, where + 1, y2);
             } else {
                 Random straight = new Random();
                 int whichStraight = straight.nextInt(2);
-                if (whichStraight == 0 && x2 - x1 > 1) {
-                    if (y2 > y1) {
-                        int where = divideVertical(x1, x2, y1, y2, true);
-                        divideWithTwoGap(x1, where - 1, y1, y2);
-                        divideWithTwoGap(where + 1, x2, y1, y2);
-                    }
-                } else if (whichStraight == 1 && y2 - y1 > 1) {
-                    if (x2 > x1) {
-                        int where = divideHorizontal(x1, x2, y1, y2, true);
-                        divideWithTwoGap(x1, x2, y1, where - 1);
-                        divideWithTwoGap(x1, x2, where + 1, y2);
-                    }
+                if (whichStraight == 0) {
+                    int where = divideVertical(x1, x2, y1, y2, true);
+                    divideWithTwoGap(x1, where - 1, y1, y2);
+                    divideWithTwoGap(where + 1, x2, y1, y2);
+                } else if (whichStraight == 1) {
+                    int where = divideHorizontal(x1, x2, y1, y2, true);
+                    divideWithTwoGap(x1, x2, y1, where - 1);
+                    divideWithTwoGap(x1, x2, where + 1, y2);
                 }
             }
         }
     }
 
     private void divide(int x1, int x2, int y1, int y2) {
-        if (x2 - x1 > 1 || y2 - y1 > 1) {
-            if (x2 - x1 > y2 - y1 && x2 - x1 > 1) {
-                if (y2 > y1) {
-                    int where = divideVertical(x1, x2, y1, y2, false);
-                    divide(x1, where, y1, y2);
-                    divide(where + 1, x2, y1, y2);
-                }
-            } else if (y2 - y1 > x2 - x1 && y2 - y1 > 1) {
-                if (x2 > x1) {
-                    int where = divideHorizontal(x1, x2, y1, y2, false);
-                    divide(x1, x2, y1, where);
-                    divide(x1, x2, where + 1, y2);
-                }
+        if (x2 - x1 > 1 && y2 - y1 > 1) {
+            if (x2 - x1 > y2 - y1) {
+                int where = divideVertical(x1, x2, y1, y2, false);
+                divide(x1, where, y1, y2);
+                divide(where + 1, x2, y1, y2);
+            } else if (y2 - y1 > x2 - x1) {
+                int where = divideHorizontal(x1, x2, y1, y2, false);
+                divide(x1, x2, y1, where);
+                divide(x1, x2, where + 1, y2);
             } else {
                 Random straight = new Random();
                 int whichStraight = straight.nextInt(2);
-                if (whichStraight == 0 && x2 - x1 > 1) {
-                    if (y2 > y1) {
-                        int where = divideVertical(x1, x2, y1, y2, false);
-                        divide(x1, where, y1, y2);
-                        divide(where + 1, x2, y1, y2);
-                    }
-                } else if (whichStraight == 1 && y2 - y1 > 1) {
-                    if (x2 > x1) {
-                        int where = divideHorizontal(x1, x2, y1, y2, false);
-                        divide(x1, x2, y1, where);
-                        divide(x1, x2, where + 1, y2);
-                    }
+                if (whichStraight == 0) {
+                    int where = divideVertical(x1, x2, y1, y2, false);
+                    divide(x1, where, y1, y2);
+                    divide(where + 1, x2, y1, y2);
+                } else if (whichStraight == 1) {
+                    int where = divideHorizontal(x1, x2, y1, y2, false);
+                    divide(x1, x2, y1, where);
+                    divide(x1, x2, where + 1, y2);
                 }
             }
         }
@@ -262,7 +246,7 @@ public class Maze {
                     System.out.print("0 ");
                 } else if (maze[i][j] == Cell.WALLL) {
                     System.out.print("+ ");
-                } else if (maze[i][j] == Cell.ENTRANCE){
+                } else if (maze[i][j] == Cell.ENTRANCE) {
                     System.out.print("# ");
                 } else {
                     System.out.print("* ");
