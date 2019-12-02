@@ -27,8 +27,6 @@ public class WriteFile {
     }
 
     public void writeMatrix(Maze maze) {
-        printWriter.println("maze");
-
         for (int i = 0; i < (2 * maze.getHeight() + 1); i++) {
             for (int j = 0; j < (2 * maze.getWidth() + 1); j++) {
                 if (maze.getCell(i, j) == Cell.ENTRANCE) {
@@ -43,7 +41,6 @@ public class WriteFile {
             }
             printWriter.println();
         }
-        printWriter.println("/maze");
         printWriter.flush();
         printWriter.close();
     }

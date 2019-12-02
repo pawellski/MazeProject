@@ -5,8 +5,11 @@
  */
 package maze;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
@@ -18,24 +21,35 @@ public class ReadFile {
 
     private File file;
     private Scanner scanner;
-    private Scanner scannerColumns;
-    private Scanner scannerRows;
+    private FileReader frRows;
+    private FileReader frColumns;
+    private BufferedReader brRows;
+    private BufferedReader brColumns;
     private int numberOfColumns;
     private int numberOfRows;
 
     public ReadFile(String fileName) throws FileNotFoundException {
         this.file = new File(fileName);
         this.scanner = new Scanner(this.file);
-        this.scannerColumns = new Scanner(this.file);
-        this.scannerRows = new Scanner(this.file);
+        this.frRows = new FileReader(file);
+        this.frColumns = new FileReader(file);
+        this.brRows = new BufferedReader(frRows);
+        this.brColumns = new BufferedReader(frColumns);
     }
 
-    public int countNumberOfColumns() throws NoSuchElementException {
-        scannerColumns.nextLine();
-        numberOfColumns = scannerColumns.nextLine().replace(" ", "").length();
+    public int countNumberOfRows() throws FileNotFoundException, IOException {
+        numberOfRows = 0;
+        while (brRows.readLine() != null) {
+            numberOfRows++;
+        }
+        return numberOfRows;
+    }
+
+    public int countNumberOfColumns() throws FileNotFoundException, IOException {
+        numberOfColumns = brColumns.readLine().replaceAll(" ", "").length();
         int line;
-        while (!(scannerColumns.hasNext("/maze"))) {
-            line = scannerColumns.nextLine().replaceAll(" ", "").length();
+        while (brColumns.readLine() != null) {
+            line = brColumns.readLine().replaceAll(" ", "").length();
             if (line != numberOfColumns) {
                 throw new NoSuchElementException("Wrong file format!");
             }
@@ -43,20 +57,10 @@ public class ReadFile {
         return numberOfColumns;
     }
 
-    public int countNubmberOfRows() {
-        scannerRows.nextLine();
-        while (!(scannerRows.hasNext("/maze"))) {
-            numberOfRows++;
-            scannerRows.nextLine();
-        }
-        return numberOfRows;
-    }
-
     public void setMaze(Maze maze) {
-        scanner.nextLine();
         for (int i = 0; i < numberOfRows; i++) {
             for (int j = 0; j < numberOfColumns; j++) {
-                switch(scanner.next()){
+                switch (scanner.next()) {
                     case "#":
                         maze.setCell(i, j, Cell.ENTRANCE);
                         break;

@@ -25,9 +25,9 @@ public class Maze {
         this.maze = new Cell[2 * hei + 1][2 * wid + 1];
     }
 
-    public Maze(String fileName) throws FileNotFoundException {
+    public Maze(String fileName) throws FileNotFoundException, IOException {
         ReadFile readFile = new ReadFile(fileName);
-        height = readFile.countNubmberOfRows() / 2;
+        height = readFile.countNumberOfRows() / 2;
         width = readFile.countNumberOfColumns() / 2;
         maze = new Cell[2 * height + 1][2 * width + 1];
         readFile.setMaze(this);
